@@ -1,57 +1,31 @@
-import MessageListItem from '../components/MessageListItem';
-import { useState } from 'react';
-import { Message, getMessages } from '../data/messages';
 import {
   IonContent,
   IonHeader,
-  IonList,
   IonPage,
-  IonRefresher,
-  IonRefresherContent,
   IonTitle,
   IonToolbar,
-  useIonViewWillEnter
+  IonItem,
+  IonInput, 
+  IonButton
 } from '@ionic/react';
 import './Home.css';
 
 const Home: React.FC = () => {
-
-  const [messages, setMessages] = useState<Message[]>([]);
-
-  useIonViewWillEnter(() => {
-    const msgs = getMessages();
-    setMessages(msgs);
-  });
-
-  const refresh = (e: CustomEvent) => {
-    setTimeout(() => {
-      e.detail.complete();
-    }, 3000);
-  };
-
   return (
-    <IonPage id="home-page">
+    <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Inbox</IonTitle>
+          <IonTitle>Database Test</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonRefresher slot="fixed" onIonRefresh={refresh}>
-          <IonRefresherContent></IonRefresherContent>
-        </IonRefresher>
-
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">
-              Inbox
-            </IonTitle>
-          </IonToolbar>
-        </IonHeader>
-
-        <IonList>
-          {messages.map(m => <MessageListItem key={m.id} message={m} />)}
-        </IonList>
+        <IonItem>
+          <IonInput label="Email input" type="email" placeholder="email@domain.com" className='ion-padding'></IonInput>
+        </IonItem>
+        <IonItem>
+          <IonInput label="Password input" type="password" value="password" className='ion-padding'></IonInput>
+        </IonItem>
+        <IonButton className='ion-margin'>Login</IonButton>
       </IonContent>
     </IonPage>
   );
