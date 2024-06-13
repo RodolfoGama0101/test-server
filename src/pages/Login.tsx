@@ -10,7 +10,7 @@ import {
   IonText
 } from '@ionic/react';
 import './Home.css';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
 import { useState } from 'react';
 
 const Login: React.FC = () => {

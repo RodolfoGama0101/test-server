@@ -10,7 +10,7 @@ import {
     IonText
 } from "@ionic/react";
 import { useState } from "react";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const Cadastro: React.FC = () => {
     var [nome, setNome] = useState("");
@@ -18,6 +18,17 @@ const Cadastro: React.FC = () => {
     var [senha, setSenha] = useState("");
 
     function fazerCadastro() {
+        function signInWithGoogle() {
+            const provider = new GoogleAuthProvider();
+        
+            signInWithPopup(auth, provider)
+              .then((result) => {
+                console.log(result.user);
+        
+              }).catch((error) => {
+                console.log(error);
+              });
+          }
         const auth = getAuth();
         createUserWithEmailAndPassword(auth, email, senha)
             .then((userCredential) => {
