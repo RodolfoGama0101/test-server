@@ -10,7 +10,8 @@ import {
     IonText
 } from "@ionic/react";
 import { useState } from "react";
-import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleLogo } from "@phosphor-icons/react";
+import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signInWithEmailLink } from "firebase/auth";
 
 const Cadastro: React.FC = () => {
     var [nome, setNome] = useState("");
@@ -61,6 +62,7 @@ const Cadastro: React.FC = () => {
                     <IonInput label="Senha: " type="password" placeholder="ds#an12e&sa" clearInput className='ion-padding' required onIonChange={(e: any) => setSenha(e.target.value)}></IonInput>
                 </IonItem>
                 <IonButton className='ion-margin' onClick={(fazerCadastro)}>Cadastrar</IonButton>
+                <IonButton className="ion-margin" onClick={signInWithGoogle}><GoogleLogo/>Google</IonButton>
             </IonContent>
         </IonPage>
     );
