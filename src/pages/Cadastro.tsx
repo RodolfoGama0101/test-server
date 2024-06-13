@@ -19,7 +19,7 @@ const Cadastro: React.FC = () => {
     var [senha, setSenha] = useState("");
 
     function fazerCadastro() {
-        function signInWithGoogle() {
+        function Google() {
             const provider = new GoogleAuthProvider();
         
             signInWithPopup(auth, provider)
@@ -62,7 +62,7 @@ const Cadastro: React.FC = () => {
                     <IonInput label="Senha: " type="password" placeholder="ds#an12e&sa" clearInput className='ion-padding' required onIonChange={(e: any) => setSenha(e.target.value)}></IonInput>
                 </IonItem>
                 <IonButton className='ion-margin' onClick={(fazerCadastro)}>Cadastrar</IonButton>
-                <IonButton className="ion-margin" onClick={signInWithGoogle}><GoogleLogo/>Google</IonButton>
+                <IonButton className="ion-margin" onClick={(fazerCadastro)}><GoogleLogo/>Google</IonButton>
             </IonContent>
         </IonPage>
     );
