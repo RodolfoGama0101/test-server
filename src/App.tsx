@@ -1,7 +1,7 @@
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import Home from './pages/Login';
+import Login from './pages/Login';
 import Main from './pages/Main';
 import Cadastro from './pages/Cadastro';
 
@@ -66,8 +66,8 @@ const App: React.FC = () => (
         <Route path="/" exact={true}>
           <Redirect to="/home" />
         </Route>
-        <Route path="/home" exact={true}>
-          <Home />
+        <Route path="/login" exact={true}>
+          <Login />
         </Route>
         <Route path="/main" exact={true}>
           <Main />

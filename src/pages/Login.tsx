@@ -7,11 +7,13 @@ import {
   IonItem,
   IonInput,
   IonButton, 
-  IonText
+  IonText,
+  IonIcon
 } from '@ionic/react';
-import './Home.css';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from "firebase/auth";
+import './Main.css';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 import { useState } from 'react';
+import { logoGoogle } from 'ionicons/icons';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -32,8 +34,24 @@ const Login: React.FC = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode + " - " + errorMessage)
+        alert(errorMessage)
       });
   }
+
+  // Login com conta Google
+  function signInWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth();
+
+    signInWithPopup(auth, provider)
+        .then((result) => {
+            console.log(result.user);
+            window.location.href = "./Main";
+
+        }).catch((error) => {
+            alert(error);
+        });
+}
 
   return (
     <IonPage>
@@ -49,9 +67,10 @@ const Login: React.FC = () => {
         <IonItem>
           <IonInput label="Password: " type="password" placeholder="ds#an12e&sa" clearInput className='ion-padding' required onIonChange={(e: any) => setSenha(e.target.value)}></IonInput>
         </IonItem>
-        <IonButton className='ion-margin' onClick={(fazerLogin)}>Login</IonButton>
-        <IonText>
-          <a href="/Cadastro">Fazer cadastro</a>
+        <IonButton className='button-login' onClick={(fazerLogin)}>Login</IonButton>
+        <IonButton className="button-google-login" onClick={(signInWithGoogle)}><IonIcon icon={logoGoogle} className="google-logo" />Google</IonButton>
+        <IonText className='texto-fazer-cadastro'>
+          <a href="/Cadastro">Ainda não tenho conta. Fazer cadastro</a>
         </IonText>
       </IonContent>
     </IonPage>
