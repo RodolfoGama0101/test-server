@@ -6,12 +6,12 @@ import {
   IonToolbar,
   IonItem,
   IonInput,
-  IonButton, 
+  IonButton,
   IonText,
   IonIcon
 } from '@ionic/react';
 import './Main.css';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth";
 import { useState } from 'react';
 import { logoGoogle } from 'ionicons/icons';
 
@@ -42,16 +42,24 @@ const Login: React.FC = () => {
   function signInWithGoogle() {
     const provider = new GoogleAuthProvider();
     const auth = getAuth();
+    provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+    auth.languageCode = 'it';
 
     signInWithPopup(auth, provider)
-        .then((result) => {
-            console.log(result.user);
-            window.location.href = "./Main";
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        console.log(result.user);
+        window.location.href = "./Main";
 
-        }).catch((error) => {
-            alert(error);
-        });
-}
+      }).catch((error) => {
+        alert(error);
+      });
+    signInWithRedirect(auth, provider);
+  }
 
   return (
     <IonPage>
