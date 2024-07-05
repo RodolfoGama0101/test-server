@@ -22,16 +22,14 @@ import { useState } from "react";
 
 const Users: React.FC = () => {
     interface UserData {
-        id: number;
+        id: string;
         firstName?: string; // Make firstName optional if it might not exist in some documents
         email: string;
     }
 
-    const [usuarios, setUsuarios] = useState(Array);
+    const [usuarios, setUsuarios] = useState<UserData[]>(Array);
 
     async function imprimirDados() {
-
-
         const querySnapshot = await getDocs(collection(db, "Users"));
 
         const usuariosData = querySnapshot.docs.map((doc) => {
@@ -39,10 +37,13 @@ const Users: React.FC = () => {
             const docData = doc.data();
 
             // Combine docId and docData into a single object
-            const combinedData = {
-                id: docId, // Add docId as a property
-                ...docData, // Spread docData to include its existing properties
+
+            const combinedData: UserData = {
+                id: docId,
+                firstName: docData.firstName || "", // Use firstName se existir, caso contrário, deixe como string vazia
+                email: docData.email, // Certifique-se de que a propriedade 'email' está presente no Firestore
             };
+
 
             return combinedData;
         });
@@ -67,10 +68,6 @@ const Users: React.FC = () => {
 
                 {usuarios.map(usuario => {
                     return (
-                        // <IonItem key={usuario.id}>
-                        //     <IonLabel>{usuario.value}</IonLabel>
-                        // </IonItem>
-
                         <IonCard key={usuario.id}>
                             <IonCardContent>
                                 <IonCardTitle>{usuario.firstName}</IonCardTitle>
