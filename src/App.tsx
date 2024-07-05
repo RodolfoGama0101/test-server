@@ -4,6 +4,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import Login from './pages/Login';
 import Main from './pages/Main';
 import Cadastro from './pages/Cadastro';
+import Users from './pages/Users';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -33,29 +34,8 @@ import '@ionic/react/css/display.css';
 import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
-import './theme/variables.css';
+import './theme/variables.css'
 
-// Import the functions you need from the SDKs you need
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { } from 'firebase/auth';
-import { } from 'firebase/firestore';
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyA8ZEz6HAi3Gyv7IdYcliOZXw_ofe9KQbk",
-  authDomain: "testserver-e90f3.firebaseapp.com",
-  projectId: "testserver-e90f3",
-  storageBucket: "testserver-e90f3.appspot.com",
-  messagingSenderId: "744256065956",
-  appId: "1:744256065956:web:7a8de61f437710dd07f131"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 
 setupIonicReact();
 
@@ -74,6 +54,9 @@ const App: React.FC = () => (
         </Route>
         <Route path="/cadastro" exact={true}>
           <Cadastro />
+        </Route>
+        <Route path="/users" exact={true}>
+          <Users></Users>
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>

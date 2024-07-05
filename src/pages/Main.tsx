@@ -34,6 +34,7 @@ const Main: React.FC = () => {
         </IonText>
 
         <IonButton className='ion-margin' onClick={(logout)}>Logout</IonButton>
+        <IonButton href='/users'>Página de usuários</IonButton>
       </IonContent>
     </IonPage>
   );

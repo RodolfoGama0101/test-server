@@ -42,14 +42,10 @@ const Login: React.FC = () => {
   function signInWithGoogle() {
     const provider = new GoogleAuthProvider();
     const auth = getAuth();
-    provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
     auth.languageCode = 'it';
 
     signInWithPopup(auth, provider)
       .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential?.accessToken;
         // The signed-in user info.
         const user = result.user;
         console.log(result.user);
@@ -58,7 +54,6 @@ const Login: React.FC = () => {
       }).catch((error) => {
         alert(error);
       });
-    signInWithRedirect(auth, provider);
   }
 
   return (

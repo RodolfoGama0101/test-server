@@ -14,6 +14,8 @@ import { useState } from "react";
 import { logoGoogle } from "ionicons/icons";
 import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signInWithEmailLink } from "firebase/auth";
 import "./Cadastro.css";
+import { auth, db } from "../firebase/firebase";
+import { doc,  setDoc } from "firebase/firestore";
 
 const Cadastro: React.FC = () => {
     var [nome, setNome] = useState("");
@@ -35,6 +37,35 @@ const Cadastro: React.FC = () => {
                 console.log(errorCode + " - " + errorMessage)
             });
     }
+
+    const handleRegister = async (e: any) => {
+        e.preventDefault();
+
+        await createUserWithEmailAndPassword(auth, email, senha)
+            .then(() => {
+                // Signed in 
+                const user = auth.currentUser;
+                console.log(user);
+                if (user) {
+                    setDoc(doc(db, "Users", user.uid), {
+                        email: user.email,
+                        firstName: nome
+                    });
+                }
+                console.log("User Registered Successfully!!");
+                // toast.success("User Registered Successfully!!", {
+                //     position: "top-center",
+                // });
+
+                // window.location.href = "./Main";
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode + " - " + errorMessage)
+            })
+
+    };
 
     // Login com conta Google
     function signInWithGoogle() {
@@ -68,7 +99,7 @@ const Cadastro: React.FC = () => {
                 <IonItem>
                     <IonInput label="Senha: " type="password" placeholder="ds#an12e&sa" clearInput className='ion-padding' required onIonChange={(e: any) => setSenha(e.target.value)}></IonInput>
                 </IonItem>
-                <IonButton className='ion-margin' onClick={(fazerCadastro)}>Cadastrar</IonButton>
+                <IonButton className='ion-margin' onClick={(handleRegister)}>Cadastrar</IonButton>
                 <IonButton className="ion-margin" onClick={(signInWithGoogle)}><IonIcon icon={logoGoogle} className="google-logo" />Google</IonButton>
                 <IonText className='texto-fazer-cadastro'>
                     <a href="/Login">Já tenho conta. Fazer login</a>
