@@ -16,6 +16,7 @@ import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWith
 import "./Cadastro.css";
 import { auth, db } from "../firebase/firebase";
 import { doc,  setDoc } from "firebase/firestore";
+import SignGoogle from "../components/SignGoogle";
 
 const Cadastro: React.FC = () => {
     var [nome, setNome] = useState("");
@@ -23,46 +24,30 @@ const Cadastro: React.FC = () => {
     var [senha, setSenha] = useState("");
 
     // Cadastro com email e senha
-    function fazerCadastro() {
-        const auth = getAuth();
-        createUserWithEmailAndPassword(auth, email, senha)
-            .then((userCredential) => {
-                // Signed in 
-                const user = userCredential.user;
-                window.location.href = "./Main";
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode + " - " + errorMessage)
-            });
-    }
-
-    const handleRegister = async (e: any) => {
+    const cadastro = async (e: any) => {
         e.preventDefault();
 
         await createUserWithEmailAndPassword(auth, email, senha)
-            .then(() => {
+            .then(async () => {
                 // Signed in 
                 const user = auth.currentUser;
                 console.log(user);
                 if (user) {
-                    setDoc(doc(db, "Users", user.uid), {
+                    await setDoc(doc(db, "Users", user.uid), {
                         email: user.email,
                         firstName: nome
                     });
                 }
-                console.log("User Registered Successfully!!");
-                // toast.success("User Registered Successfully!!", {
-                //     position: "top-center",
-                // });
 
-                // window.location.href = "./Main";
+                window.alert("User Registered Successfully!!");
+                
+                window.location.href = "./Login";
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                console.log(errorCode + " - " + errorMessage)
+                console.log(errorCode)
+                window.alert(errorMessage);
             })
 
     };
@@ -78,7 +63,9 @@ const Cadastro: React.FC = () => {
                 window.location.href = "./Main";
 
             }).catch((error) => {
+                const errorMessage = error.message;
                 console.log(error);
+                window.alert(errorMessage);
             });
     }
 
@@ -99,8 +86,8 @@ const Cadastro: React.FC = () => {
                 <IonItem>
                     <IonInput label="Senha: " type="password" placeholder="ds#an12e&sa" clearInput className='ion-padding' required onIonChange={(e: any) => setSenha(e.target.value)}></IonInput>
                 </IonItem>
-                <IonButton className='ion-margin' onClick={(handleRegister)}>Cadastrar</IonButton>
-                <IonButton className="ion-margin" onClick={(signInWithGoogle)}><IonIcon icon={logoGoogle} className="google-logo" />Google</IonButton>
+                <IonButton className='ion-margin' onClick={(cadastro)}>Cadastrar</IonButton>
+                <SignGoogle></SignGoogle>
                 <IonText className='texto-fazer-cadastro'>
                     <a href="/Login">Já tenho conta. Fazer login</a>
                 </IonText>

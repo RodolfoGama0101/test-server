@@ -14,6 +14,7 @@ import './Main.css';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signInWithRedirect } from "firebase/auth";
 import { useState } from 'react';
 import { logoGoogle } from 'ionicons/icons';
+import SignGoogle from '../components/SignGoogle';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -70,8 +71,8 @@ const Login: React.FC = () => {
         <IonItem>
           <IonInput label="Password: " type="password" placeholder="ds#an12e&sa" clearInput className='ion-padding' required onIonChange={(e: any) => setSenha(e.target.value)}></IonInput>
         </IonItem>
-        <IonButton className='button-login' onClick={(fazerLogin)}>Login</IonButton>
-        <IonButton className="button-google-login" onClick={(signInWithGoogle)}><IonIcon icon={logoGoogle} className="google-logo" />Google</IonButton>
+        <IonButton className='button-login ion-margin' onClick={(fazerLogin)}>Login</IonButton>
+        <SignGoogle></SignGoogle>
         <IonText className='texto-fazer-cadastro'>
           <a href="/Cadastro">Ainda não tenho conta. Fazer cadastro</a>
         </IonText>
